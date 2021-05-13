@@ -27,14 +27,6 @@ public class BumperManager : MonoBehaviour
     {
 
         enemyRb.AddForce(transform.forward * hitForce);
-
-        //RaycastHit hit;
-        //if( Physics.Raycast(fpsCar.transform.position,fpsCar.transform.forward,out hit, hitRange))
-        //{
-        //    Debug.Log(hit.transform.name);
-
-        //    hit.rigidbody.AddForce(hit.normal * hitForce);
-        //}
     }
 
     private void Force()
