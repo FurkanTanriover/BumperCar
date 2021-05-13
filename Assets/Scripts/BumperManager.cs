@@ -8,7 +8,7 @@ public class BumperManager : MonoBehaviour
     RaycastHit hit;
 
     public float hitRange = 50f;
-    public float hitForce = 400f;
+    public float hitForce = 0f;
 
 
     private Transform carBody;
@@ -51,7 +51,7 @@ public class BumperManager : MonoBehaviour
             Rigidbody enemyRb;
             enemyRb = collision.gameObject.GetComponent<Rigidbody>();
             Debug.Log("xxxxxx");
-            Bump();
+           // Bump();
         }
     }
 
