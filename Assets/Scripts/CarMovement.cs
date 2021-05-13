@@ -18,7 +18,6 @@ public class CarMovement : MonoBehaviour
 
     void Update()
     { 
-      //  float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.forward * z;
