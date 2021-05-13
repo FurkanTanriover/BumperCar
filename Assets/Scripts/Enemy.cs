@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
         if (transform.position.y < -8.0)
         {
             winLoseScript.Lose();
+
         }
         
     }

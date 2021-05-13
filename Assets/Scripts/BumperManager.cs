@@ -8,30 +8,33 @@ public class BumperManager : MonoBehaviour
     RaycastHit hit;
 
     public float hitRange = 50f;
-    public float hitForce = 0f;
+    public float hitForce = 1000f;
 
-
-    private Transform carBody;
-    public GameObject fpsCar;
     
 
 
+    private Transform carBody;
+    
+
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = transform.parent.GetComponent<Rigidbody>();
         
     }
 
 
-    void Bump()
+    void Bump(Rigidbody enemyRb)
     {
-        RaycastHit hit;
-        if( Physics.Raycast(fpsCar.transform.position,fpsCar.transform.forward,out hit, hitRange))
-        {
-            Debug.Log(hit.transform.name);
 
-            hit.rigidbody.AddForce(hit.normal * hitForce);
-        }
+        enemyRb.AddForce(transform.forward * hitForce);
+
+        //RaycastHit hit;
+        //if( Physics.Raycast(fpsCar.transform.position,fpsCar.transform.forward,out hit, hitRange))
+        //{
+        //    Debug.Log(hit.transform.name);
+
+        //    hit.rigidbody.AddForce(hit.normal * hitForce);
+        //}
     }
 
     private void Force()
@@ -43,16 +46,25 @@ public class BumperManager : MonoBehaviour
     {
         
     }
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.CompareTag("Enemy"))
+        if(other.CompareTag("Enemy"))
         {
             Rigidbody enemyRb;
-            enemyRb = collision.gameObject.GetComponent<Rigidbody>();
+            enemyRb = other.gameObject.GetComponent<Rigidbody>();
             Debug.Log("xxxxxx");
-           // Bump();
+            Bump(enemyRb);
+        }   
+        else if(other.CompareTag("Player"))
+        {
+            CarMovement carMovement = other.GetComponent<CarMovement>();
+            carMovement.SetBumpedValue();
+            Rigidbody playerRb;
+            playerRb = other.gameObject.GetComponent<Rigidbody>();
+            Debug.Log("yyyy");
+            Bump(playerRb);
         }
+
     }
 
 }

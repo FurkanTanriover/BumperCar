@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class CarMovement : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class CarMovement : MonoBehaviour
     public float gravity = -10f;
     public Vector3 point;
     public float rotationSpeed;
+    public bool isBumped;
+    public float bumpDelayTime=.2f;
 
     Rigidbody rb;
 
@@ -20,14 +24,30 @@ public class CarMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        Time.timeScale = 0.8f;
+
     }
 
     void Update()
     {
-        Movement();
-       
+        if (!isBumped)
+        {
+            Movement();
+        }
     }
 
+    public void SetBumpedValue()
+    {
+        isBumped = true;
+        StartCoroutine(ReverseBumpedValue());
+    }
+
+    IEnumerator ReverseBumpedValue()
+    {
+        yield return new WaitForSeconds(bumpDelayTime);
+        isBumped = false;
+
+    }
 
 
     private void Movement()
@@ -38,7 +58,6 @@ public class CarMovement : MonoBehaviour
         Vector3 move = transform.forward * z;
         rb.velocity = move * moveForce;
         rb.angularVelocity = Vector3.zero;
-        Debug.Log(move);
 
         if (Input.GetKey(KeyCode.D))
         {
