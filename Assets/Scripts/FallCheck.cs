@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class FallCheck : MonoBehaviour
 {
@@ -50,6 +51,12 @@ public class FallCheck : MonoBehaviour
             {
                 LevelController.instance.enemyCount--;
                 other.GetComponent<NavMeshAgent>().enabled = false;
+                other.GetComponent<Patrol>().enabled = false;
+                if(other.GetComponent<Wander>()!=null)
+                {
+                    other.GetComponent<Wander>().enabled = false;
+
+                }
                 if (LevelController.instance.enemyCount == 0)
                 {
                     winScreen.SetActive(true);

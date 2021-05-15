@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 
 public class CarMovement : MonoBehaviour
 {
@@ -17,7 +17,7 @@ public class CarMovement : MonoBehaviour
     public Vector3 point;
     public float rotationSpeed;
     public bool isBumped;
-    public float bumpDelayTime=.2f;
+    public float bumpDelayTime = .2f;
     [SerializeField] Transform wheelDirection;
 
     Rigidbody rb;
@@ -59,18 +59,18 @@ public class CarMovement : MonoBehaviour
     {
         float x = joystick.Horizontal;
         float z = joystick2.Vertical;
-        
+
 
         Vector3 move = transform.forward * z;
         rb.velocity = move * moveForce;
         rb.angularVelocity = Vector3.zero;
 
-        if (x>0)
+        if (x > 0)
         {
             wheelDirection.eulerAngles -= Vector3.forward * rotationSpeed / 4;
             transform.eulerAngles += Vector3.up * rotationSpeed;
         }
-        else if (x<0)
+        else if (x < 0)
         {
             wheelDirection.eulerAngles += Vector3.forward * rotationSpeed / 4;
             transform.eulerAngles -= Vector3.up * rotationSpeed;
@@ -89,7 +89,7 @@ public class CarMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
-            wheelDirection.eulerAngles -= Vector3.forward * rotationSpeed/4;
+            wheelDirection.eulerAngles -= Vector3.forward * rotationSpeed / 4;
             transform.eulerAngles += Vector3.up * rotationSpeed;
         }
         else if (Input.GetKey(KeyCode.A))

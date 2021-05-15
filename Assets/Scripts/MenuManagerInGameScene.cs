@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MenuManagerInGameScene : MonoBehaviour
@@ -23,6 +24,7 @@ public class MenuManagerInGameScene : MonoBehaviour
         Time.timeScale = 1;  
         inGameScreen.SetActive(true); 
         pauseScreen.SetActive(false);
+        joystick.SetActive(true);
     }
 
     public void RePlayButton()
