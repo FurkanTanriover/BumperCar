@@ -1,19 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 public class BumperManager : MonoBehaviour
 {
     Rigidbody rb;
-    RaycastHit hit;
+
 
     public float hitRange = 50f;
     public float hitForce = 1000f;
 
-    
-
-
-    private Transform carBody;
+    public CameraShake cameraShake;
+ 
     
 
     void Start()
@@ -29,32 +26,26 @@ public class BumperManager : MonoBehaviour
         enemyRb.AddForce(transform.forward * hitForce);
     }
 
-    private void Force()
-    {
-
-    }
-
-    void Update()
-    {
-        
-    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Enemy"))
         {
             Rigidbody enemyRb;
-            enemyRb = other.gameObject.GetComponent<Rigidbody>();
-            Debug.Log("xxxxxx");
+            enemyRb = other.gameObject.GetComponent<Rigidbody>();;
             Bump(enemyRb);
-        }   
+            if(gameObject.transform.parent.name=="PlayerCar")
+            StartCoroutine(cameraShake.Shake(.2f, .2f));
+
+        }
         else if(other.CompareTag("Player"))
         {
             CarMovement carMovement = other.GetComponent<CarMovement>();
             carMovement.SetBumpedValue();
             Rigidbody playerRb;
             playerRb = other.gameObject.GetComponent<Rigidbody>();
-            Debug.Log("yyyy");
             Bump(playerRb);
+            if (gameObject.transform.parent.name == "PlayerCar")
+                StartCoroutine(cameraShake.Shake(.2f, .2f));
         }
 
     }

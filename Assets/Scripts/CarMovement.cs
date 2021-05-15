@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+
 
 public class CarMovement : MonoBehaviour
 {
 
     public CharacterController controller;
+
+    [SerializeField] Joystick joystick;
+    [SerializeField] Joystick joystick2;
+
 
 
     public float moveForce;
@@ -14,17 +18,18 @@ public class CarMovement : MonoBehaviour
     public float rotationSpeed;
     public bool isBumped;
     public float bumpDelayTime=.2f;
+    [SerializeField] Transform wheelDirection;
 
     Rigidbody rb;
 
 
-    Vector3 velocity;
 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         Time.timeScale = 0.8f;
+
 
     }
 
@@ -33,6 +38,7 @@ public class CarMovement : MonoBehaviour
         if (!isBumped)
         {
             Movement();
+            JoystickMovement();
         }
     }
 
@@ -49,11 +55,33 @@ public class CarMovement : MonoBehaviour
 
     }
 
+    private void JoystickMovement()
+    {
+        float x = joystick.Horizontal;
+        float z = joystick2.Vertical;
+        
 
+        Vector3 move = transform.forward * z;
+        rb.velocity = move * moveForce;
+        rb.angularVelocity = Vector3.zero;
+
+        if (x>0)
+        {
+            wheelDirection.eulerAngles -= Vector3.forward * rotationSpeed / 4;
+            transform.eulerAngles += Vector3.up * rotationSpeed;
+        }
+        else if (x<0)
+        {
+            wheelDirection.eulerAngles += Vector3.forward * rotationSpeed / 4;
+            transform.eulerAngles -= Vector3.up * rotationSpeed;
+        }
+    }
+
+
+    #region for computer control
     private void Movement()
     {
         float z = Input.GetAxis("Vertical");
-        float x = Input.GetAxis("Horizontal");
 
         Vector3 move = transform.forward * z;
         rb.velocity = move * moveForce;
@@ -61,12 +89,14 @@ public class CarMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
+            wheelDirection.eulerAngles -= Vector3.forward * rotationSpeed/4;
             transform.eulerAngles += Vector3.up * rotationSpeed;
         }
         else if (Input.GetKey(KeyCode.A))
         {
+            wheelDirection.eulerAngles += Vector3.forward * rotationSpeed / 4;
             transform.eulerAngles -= Vector3.up * rotationSpeed;
         }
-
     }
+    #endregion
 }

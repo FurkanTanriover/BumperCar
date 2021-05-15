@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,12 +6,11 @@ public class Wander : MonoBehaviour
 {
     private NavMeshAgent agent;
 
-  
     void Start()
     {
         agent = this.GetComponent<NavMeshAgent>();
     }
-    void Seek(Vector3 location)//aramak
+    void Seek(Vector3 location)
     {
         agent.SetDestination(location);
     }
@@ -22,8 +20,8 @@ public class Wander : MonoBehaviour
 
     void Wanderr()
     {
-        float wanderRadius = 10;
-        float wanderDistance = 5;
+        float wanderRadius = 4;
+        float wanderDistance = 2;
         float wanderJitter = 1;
 
         wanderTarget += new Vector3(Random.Range(-2.0f, 2.0f) * wanderJitter, 0, Random.Range(-2.0f, 2.0f) * wanderJitter);

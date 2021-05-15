@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -26,8 +25,7 @@ public class Patrol : MonoBehaviour
         destPoint = (destPoint + 1) % points.Length;
     }
 
-    
-    void Flee(Vector3 location) //kaçmak
+    void Flee(Vector3 location) 
     {
         Vector3 fleeVector = location - this.transform.position;
         agent.SetDestination(this.transform.position - fleeVector);
